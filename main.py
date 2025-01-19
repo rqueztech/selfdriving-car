@@ -75,9 +75,28 @@ post_office_image = pg.transform.scale(post_office_image, new_size)
 post_office_rect = post_office_image.get_rect()
 post_office_rect.topleft = (730, 200)
 
+# FamilyMartの画像をロード
+restaurant_image = pg.image.load('restaurant.png')
+
+# 縮小したい幅を設定
+desired_width = 50
+original_fm_size = restaurant_image.get_size()
+aspect_ratio = original_size[1] / original_size[0]
+
+# 縦横比を保った新しいサイズを計算
+new_size = (desired_width, int(desired_width * aspect_ratio))
+
+# 画像を新しいサイズにスケール
+restaurant_image = pg.transform.scale(restaurant_image, new_size)
+
+# 画像のrectを取得し、希望の位置に配置
+restaurant_rect = restaurant_image.get_rect()
+restaurant_rect.topleft = (120, 400)
+
 # 衝突検出のための変数を追加
 at_familymart = False
 at_post_office = False
+at_restaurant = False
 
 # グリッドの描画関数
 def draw_grid():
@@ -169,6 +188,7 @@ while True:
     draw_grid()  # グリッドを描画
     screen.blit(familymart_image, familymart_rect)  # FamilyMartの画像を描画
     screen.blit(post_office_image, post_office_rect)  # 郵便局の画像を描画
+    screen.blit(restaurant_image, restaurant_rect)  # レストランの画像を描画
     screen.blit(car_image, car_rect)  # 車の新しい位置を画面に描画
     if destination_x is not None and destination_y is not None:
         pg.draw.rect(screen, (255, 0, 0), (destination_x, destination_y, grid_size, grid_size), 2)# 目的地を示す赤い四角形を描画
@@ -180,6 +200,12 @@ while True:
     # 車と郵便局の衝突を検出
     if car_rect.colliderect(post_office_rect):
         at_post_office = True
+
+    # 車とレストランの衝突を検出
+    if car_rect.colliderect(restaurant_rect):
+        at_restaurant = True
+
+    # 車とレストランの
 
     # 車と郵便局の衝突を検出
     if car_rect.x== destination_x and car_rect.y == destination_y:
@@ -194,6 +220,12 @@ while True:
     
     elif at_post_office:
         goal_text = "post_office"
+        text_surface = myfont.render(goal_text, True, (255, 0, 0))  # 赤色のテキストを作成
+        text_rect = text_surface.get_rect(center=(width / 2, height / 2))
+        screen.blit(text_surface, text_rect)  # テキストを画面の中央に描画
+
+    elif at_restaurant:
+        goal_text = "Let's Eat!"
         text_surface = myfont.render(goal_text, True, (255, 0, 0))  # 赤色のテキストを作成
         text_rect = text_surface.get_rect(center=(width / 2, height / 2))
         screen.blit(text_surface, text_rect)  # テキストを画面の中央に描画
