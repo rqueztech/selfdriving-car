@@ -56,9 +56,6 @@ familymart_rect.topleft = (40, 40)
 
 # 郵便局の画像をロード
 post_office_image = pg.image.load('post_office.png')
-# ここで座標を指定します
-post_office_rect = post_office_image.get_rect()
-post_office_rect.topleft = (30, 20)
 
 # 縮小したい幅を設定
 desired_width = 50
