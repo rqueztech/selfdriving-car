@@ -188,7 +188,7 @@ while True:
 		refreshLocation("Let's Eat!")
 
 	# 車と学校の衝突を検出
-	elif school_rect.colliderect(school_rect):
+	elif car_rect.colliderect(school_rect):
 		refreshLocation("School In Session!")
 
 	# 車と郵便局の衝突を検出
